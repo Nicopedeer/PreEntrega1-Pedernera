@@ -6,7 +6,7 @@ import Item from '../Item/Item';
 
 const ItemListContainer = ({greeting}) => {
     const[products, setProducts] = useState([])
-    const promiseItems =new Promise ((resolve, reject) =>{
+    /*const promiseItems =new Promise ((resolve, reject) =>{
         const ArrayItems =[
             {name : "remera",
             id: 1,
@@ -22,12 +22,15 @@ const ItemListContainer = ({greeting}) => {
             ArrayItems.length > 0 ? resolve(ArrayItems) : reject("esta vacio")
         },5000)
        
-    })
+    })*/
     useEffect(() => {
-        promiseItems
-        .then(res =>{
-            setProducts(res)
-        })
+        fetch('https://fakestoreapi.com/products?limit=5')
+            .then(res=>res.json())
+            .then(json=>{
+                (console.log(json))
+                setProducts(json)
+            })
+            
         .catch(error => console.error(error.message))
     },[])
     
@@ -42,7 +45,7 @@ const ItemListContainer = ({greeting}) => {
             <ItemCount />
             {products.length > 0 ? (
                 <>
-                {products.map((product, id) => <Item key={product.id} producto={product}/>)}
+                {products.map((product, id) => <Item key={id} producto={product}/>)}
                 </>
             ) : (
                 <Spin />
