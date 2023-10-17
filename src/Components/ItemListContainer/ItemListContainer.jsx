@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { message, Spin } from 'antd';
 import Item from '../Item/Item';
 
-const ItemListContainer = ({greeting}) => {
+const ItemListContainer = () => {
     const[products, setProducts] = useState([])
     /*const promiseItems =new Promise ((resolve, reject) =>{
         const ArrayItems =[
@@ -38,10 +38,6 @@ const ItemListContainer = ({greeting}) => {
 
     return(
         <>
-            <h1>
-                {greeting}
-            </h1>
-            <br />
             <ItemCount />
             {products.length > 0 ? (
                 <>
