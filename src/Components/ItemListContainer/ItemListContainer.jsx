@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { message, Spin } from 'antd';
 import Item from '../Item/Item';
 import { useParams } from 'react-router-dom';
+import './ItemListContainer.css'
 
 const ItemListContainer = () => {
     const[products, setProducts] = useState([])
@@ -25,9 +26,9 @@ const ItemListContainer = () => {
     return(
         <>
             {products.length > 0 ? (
-                <>
+                <div className='container'>
                 {products.map((product, id) => <Item key={id} producto={product}/>)}
-                </>
+                </div>
             ) : (
                 <Spin />
             )}
