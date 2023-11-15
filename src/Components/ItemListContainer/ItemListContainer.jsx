@@ -1,25 +1,27 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import ItemCount from '../ItemCount/ItemCount'
 import { useEffect, useState } from 'react';
 import { message, Spin } from 'antd';
 import Item from '../Item/Item';
 import { useParams } from 'react-router-dom';
 import './ItemListContainer.css'
+import { db } from '../../Firebase/Client';
+import { collection, getDocs, where, query } from 'firebase/firestore';
 
 const ItemListContainer = () => {
     const[products, setProducts] = useState([])
-    const {categoryName} = useParams()
+    const {category} = useParams()
     useEffect(() => {
-        const url = categoryName ? `https://fakestoreapi.com/products/category/${categoryName}` : 'https://fakestoreapi.com/products'
-        fetch(url)
-            .then(res=>res.json())
-            .then(json=>{
-                (console.log(json))
-                setProducts(json)
-            })
-            
+        const producstRef =collection(db, "products") 
+        const productsRefFilter = query (collection(db, "products"), where ("category", "==" ,`${category}`))
+        getDocs(category ? productsRefFilter : producstRef)
+        .then((snapshot) => {
+            if(snapshot!= null){
+                setProducts(snapshot.docs.map(doc => ({id : doc.id, ...doc.data()})))
+        }
+        
+        })
         .catch(error => console.error(error.message))
-    },[categoryName])
+    },[category])
     
 
 

@@ -1,20 +1,22 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { Spin } from "antd"
 import './ItemDetailContainer.css'
+import ItemCount from "../ItemCount/ItemCount"
+import { doc, getDoc } from "firebase/firestore"
+import { db } from "../../Firebase/Client"
 
 const ItemDetailContainer = () =>{
     const {id} = useParams()
     const [producto, setProductos] = useState()
 
     useEffect(() => {
-        fetch(`https://fakestoreapi.com/products/${id}`)
-            .then(res=>res.json())
-            .then(json=>{
-                setProductos(json)
-                console.log(json)
-            })
-            .catch(error =>console.error(error))
+        const productRef = doc(db, "products", `${id}`)
+        getDoc(productRef)
+        .then((snapshot) => {
+            if(snapshot.exists())
+            setProductos(snapshot.data())
+        })
     },[id])
 
     return(
@@ -31,7 +33,8 @@ const ItemDetailContainer = () =>{
                     <span>{producto.category}</span>
                 </h2>
                 <p>{producto.description}</p>
-                <h3>${producto.price}</h3>
+                <h4>${producto.price}</h4>
+                <ItemCount producto={producto} />
             </div>
         </div>
         </div>
