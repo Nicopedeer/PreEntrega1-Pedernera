@@ -12,6 +12,7 @@ const Checkout = () =>{
     const [totalPrice, setTotalPrice] = useState(0)
     const [disable, setDisable] = useState(false)
     const [arrayOrder, setArrayOrder] = useState([])
+    const [orderId, setOrderId] = useState()
 
     
     
@@ -33,7 +34,7 @@ const Checkout = () =>{
             date: serverTimestamp()
         }
         const ordersCollection = collection(db, "orders")
-        addDoc(ordersCollection, order)
+        addDoc(ordersCollection, order).then(({id}) => setOrderId(id))
         
 
     }
@@ -57,10 +58,13 @@ const Checkout = () =>{
 			            <input type="number" name="phone" className="input" placeholder="Telefono" disabled={disable} required/>
                     </div>
                     <button type="submit" disabled={disable}>Finalizar Compra</button>
+                    <Button onClick={clearCart} type="primary">Vaciar Carro</Button>
+
                 </form>
                 {disable == true &&
                 <>
-                <span className="title">Compra finalizada</span> 
+                <span className="title">Compra finalizada</span>
+                <span className="title">Id de su compra:{orderId}</span> 
                 <Button onClick={clearCart} type="link"><Link to={'/'}>Volver a inicio</Link></Button>
                 </>}
             </div>
