@@ -58,13 +58,13 @@ const Checkout = () =>{
 			            <input type="number" name="phone" className="input" placeholder="Telefono" disabled={disable} required/>
                     </div>
                     <button type="submit" disabled={disable}>Finalizar Compra</button>
-                    <Button onClick={clearCart} type="primary">Vaciar Carro</Button>
+                    <Button onClick={clearCart} type="primary" disabled={disable}>Vaciar Carro</Button>
 
                 </form>
                 {disable == true &&
                 <>
-                <span className="title">Compra finalizada</span>
-                <span className="title">Id de su compra:{orderId}</span> 
+                <p className="title">Compra finalizada</p>
+                <p className="input">Id de su compra:{orderId}</p> 
                 <Button onClick={clearCart} type="link"><Link to={'/'}>Volver a inicio</Link></Button>
                 </>}
             </div>

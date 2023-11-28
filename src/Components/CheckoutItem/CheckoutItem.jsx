@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext} from "react";
 import { Card, Button } from "antd"
 import { CartContext } from "../../context/CartContext";
 
 
-const CheckoutItem = ({producto, id}) =>{
+const CheckoutItem = ({producto}) =>{
     const { Meta } = Card;
-    const {arrayProducts,setArrayProducts, totalItems, setTotalItems} = useContext(CartContext)
+    const {arrayProducts,totalItems, setTotalItems} = useContext(CartContext)
+    const index = arrayProducts.indexOf(producto)
+
     const deleteFromCart = () => {
-      setArrayProducts(arrayProducts.filter(item => (item.id !== id)))
-      setTotalItems(totalItems-1)
+      arrayProducts.splice(index, 1)
+      setTotalItems(totalItems -1)
     }
 
     return(
