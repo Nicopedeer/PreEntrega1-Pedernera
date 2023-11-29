@@ -8,10 +8,9 @@ import { Link } from "react-router-dom";
 import { Button } from "antd";
 
 const Checkout = () =>{
-    const {arrayProducts,setArrayProducts, setTotalItems} = useContext(CartContext)
+    const {arrayProducts,setArrayProducts, setTotalItems,arrayOrder, setArrayOrder} = useContext(CartContext)
     const [totalPrice, setTotalPrice] = useState(0)
     const [disable, setDisable] = useState(false)
-    const [arrayOrder, setArrayOrder] = useState([])
     const [orderId, setOrderId] = useState()
 
     

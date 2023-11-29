@@ -5,11 +5,12 @@ import { CartContext } from "../../context/CartContext";
 
 const CheckoutItem = ({producto}) =>{
     const { Meta } = Card;
-    const {arrayProducts,totalItems, setTotalItems} = useContext(CartContext)
+    const {arrayProducts,totalItems, setTotalItems,setArrayOrder} = useContext(CartContext)
     const index = arrayProducts.indexOf(producto)
 
     const deleteFromCart = () => {
       arrayProducts.splice(index, 1)
+      setArrayOrder([... new Set(arrayProducts.map((prod => ({title: prod.title, price:prod.price}))))])
       setTotalItems(totalItems -1)
     }
 
